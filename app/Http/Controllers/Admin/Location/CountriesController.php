@@ -19,7 +19,10 @@ class CountriesController extends Controller
      */
     public function index()
     {
-        $countries = Country::get();
+        //$countries = Country::get();
+
+        $countries = Country::orderBy('name', 'asc')
+                        ->get();
 
         return view('admin.location.countries')->with('countries', $countries);
     }
