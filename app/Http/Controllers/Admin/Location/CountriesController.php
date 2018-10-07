@@ -110,7 +110,7 @@ class CountriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return 123;
     }
 
     /**

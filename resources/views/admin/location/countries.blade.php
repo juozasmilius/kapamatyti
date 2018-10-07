@@ -4,7 +4,10 @@
 
 <div class='row '>
         <div class='col s12'>
-        <div><h2 class='header'>Countries<a class='waves-effect waves-light btn modal-trigger green darken-2 right' href='#create'>{{__('Add')}} <i class='material-icons left'>add</i></a></h2></div>
+        <div>
+            <h2 class='header'>Countries</h2>
+            <span class="valign-wrapper"><button data-target="create" class=" waves-effect middle waves-light btn modal-trigger green darken-2 right">{{__('Add')}}<i class='material-icons left'>add</i></button></span>
+        </div>
             <div class='card'>
                 @if (session('status'))
                     <div class='alert alert-success' role='alert'>
@@ -17,9 +20,12 @@
                         <ul class='collection'>
                             @foreach($countries as $country)
                                 <li class='collection-item avatar'>
-                                <img src='storage/img/flags/{{$country->flag}}' alt='' class='circle z-depth-1 responsive-img'>
-                                    <span class='card-title flow-text green-text text-darken-2'><strong>{{__($country->name)}}</strong></span>
-                                    <a data-target="'#edit' + {{$country->id}}" class='secondary-content btn modal-trigger waves-efect waves-light'><i class='material-icons'>create</i></a>
+                                    <img src='storage/img/flags/{{$country->flag}}' alt='' class='circle z-depth-1 responsive-img'>
+                                    <span class='card-title flow-text green-text text-darken-2'><strong>{{__($country->name)}}</strong>
+                                    <span class="badge">
+                                    <button data-target="edit" class="btn modal-trigger"><i class='material-icons'>create</i></button>
+                                    <button data-target="delete" class="btn modal-trigger red"><i class='material-icons'>delete</i></button></span>
+                                    </span>
                                 </li>
                             @endforeach
                         </ul>
@@ -41,42 +47,16 @@
             <h2 class="header">Create Country<a href="/countries" class="btn waves-effect waves-light right"> {{__("Back")}} <i class="material-icons left">arrow_back</i></a></h2>
                 <div class="card-panel">
                     {!!Form::open(['route' => 'countries.store', 'method' => 'POST', 'enctype' => 'multipart/form-data'])!!}
-                        <div class="row">
-                            <div class="input-field col s12">
-                                {{Form::text('name', '', ['class' => 'validate', 'id' => 'name'])}}
-                                {{Form::label('name', 'Country name')}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                {{Form::text('iso2', '', ['class' => 'validate', 'id' => 'iso2'])}}
-                                {{Form::label('iso2', 'ISO2')}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                {{Form::text('iso3', '', ['class' => 'validate', 'id' => 'iso3'])}}
-                                {{Form::label('iso3', 'ISO3')}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                {{Form::text('phoneCode', '', ['class' => 'validate', 'id' => 'phoneCode'])}}
-                                {{Form::label('phoneCode', 'Phone Code +370')}}
-                            </div>
-                        </div>
-                        <div class="file-field input-field">
-                            <div class="btn">
-                            <span>File</span>
-                            {{Form::file('flag')}}
-                            </div>
-                            <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="Country Flag">
-                            </div>
-                        </div> 
-                        <button class="btn waves-effect waves-light" type="submit" name="action">{{__("Submit")}}
-                            <i class="material-icons right">save</i>
-                        </button>
+                    {{ csrf_field() }}
+                    @include('admin.location.formcountry')
+                        <div class="modal-footer">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">{{__("Save")}}
+                                <i class="material-icons right">save</i>
+                            </button>
+                            <button class="btn modal-close waves-effect waves-light" type="button">{{__("Close")}}
+                                <i class="material-icons right">close</i>
+                            </button>
+                          </div>
                     {!! Form::close()!!}
                 </div>
             </div>
@@ -85,50 +65,24 @@
 </div>
 
 <!-- Edit Modal Structure -->
-<div id='edit' class='modal'><a href='#!' class='modal-close red lighten-1 waves-effect waves-red right'><i class='material-icons'>close</i></a>
+<div id='edit' class='modal'><a href='#!' class='modal-close red lighten-1 waves-effect waves-red btn-floating btn-small right'><i class='material-icons'>close</i></a>
     <div class='modal-content'>
         <h3 class='card-panel center'><strong>{{__('Edit Country')}}</strong></h3>
         <div class="row ">
             <div class="col s12">
-            <h2 class="header">Create Country<a href="/countries" class="btn waves-effect waves-light right"> {{__("Back")}} <i class="material-icons left">arrow_back</i></a></h2>
+            <h2 class="header">Create Country<a href="/countries" class="btn modal-close waves-effect waves-light right"> {{__("Back")}} <i class="material-icons left">arrow_back</i></a></h2>
                 <div class="card-panel">
-                    {!!Form::open(['route' => 'countries.store', 'method' => 'POST', 'enctype' => 'multipart/form-data'])!!}
-                        <div class="row">
-                            <div class="input-field col s12">
-                                {{Form::text('name', '', ['class' => 'validate', 'id' => 'name'])}}
-                                {{Form::label('name', 'Country name')}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                {{Form::text('iso2', '', ['class' => 'validate', 'id' => 'iso2'])}}
-                                {{Form::label('iso2', 'ISO2')}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                {{Form::text('iso3', '', ['class' => 'validate', 'id' => 'iso3'])}}
-                                {{Form::label('iso3', 'ISO3')}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                {{Form::text('phoneCode', '', ['class' => 'validate', 'id' => 'phoneCode'])}}
-                                {{Form::label('phoneCode', 'Phone Code +370')}}
-                            </div>
-                        </div>
-                        <div class="file-field input-field">
-                            <div class="btn">
-                            <span>File</span>
-                            {{Form::file('flag')}}
-                            </div>
-                            <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="Country Flag">
-                            </div>
-                        </div> 
-                        <button class="btn waves-effect waves-light" type="submit" name="action">{{__("Submit")}}
-                            <i class="material-icons right">save</i>
-                        </button>
+                    {!!Form::open(['route' => ['countries.update', 'test'], 'method' => 'POST', 'enctype' => 'multipart/form-data'])!!}
+                    {{ csrf_field() }}
+                        @include('admin.location.formcountry')
+                        <div class="modal-footer">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">{{__("Save")}}
+                                <i class="material-icons right">save</i>
+                            </button>
+                            <button class="btn modal-close waves-effect waves-light" type="button">{{__("Close")}}
+                                <i class="material-icons right">close</i>
+                            </button>
+                          </div>
                     {!! Form::close()!!}
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <nav>
-        <div class="nav-wrapper green lighten-1">
+        <div class="nav-wrapper teal">
             <a href="{{ url('/') }}" class="brand-logo">{{ config('app.name', 'Ką Pamatyti') }}</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                  <!-- Authentication Links -->
